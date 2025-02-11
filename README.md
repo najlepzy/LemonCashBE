@@ -3,6 +3,8 @@
 
 Este repositorio contiene el backend de un **Task Manager** construido con **NestJS**, que utiliza **PostgreSQL** como base de datos y **Prisma** como ORM. Además, implementa autenticación con JWT, validación de datos con Zod, encriptación con bcrypt, compresión de respuestas y comunicación en tiempo real mediante Socket.io para la gestión de colaboradores.
 
+## El archivo .env esta presente en root y accesible para pruebas (no incluido en .gitignore).
+
 ## Tabla de Contenidos
 
 - [Características](#características)
