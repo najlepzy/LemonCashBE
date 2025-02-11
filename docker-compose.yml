@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: lemonbe-db
+    environment:
+      POSTGRES_DB: lemonbe
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d lemonbe"]
+      interval: 5s
+      retries: 5
+
+  app:
+    build: .
+    image: lemonbe:v1.0.1
+    container_name: lemonbe-app
+    ports:
+      - "4000:4000"
+      - "5555:5555"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 4000
+      DATABASE_URL: "postgresql://admin:admin@postgres:5432/lemonbe?schema=public"
+      JWT_SECRET: "07a74b4fbbe685115081b4909e39902829ae79394eea7e22903be9a8af767263"
+    restart: always
+
+volumes:
+  db_data:

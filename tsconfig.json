@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@common/*": ["src/common/*"],
+      "@error-handlers/*": ["src/error-handlers/*"],
+      "@interface/*": ["src/interface/*"],
+      "@modules/*": ["src/modules/*"],
+      "@config/*": ["src/config/*"],
+      "@notifications/*": ["src/notifications/*"],
+      "@pipes/*": ["src/pipes/*"],
+      "@prisma/*": ["src/prisma/*"],
+      "@app/*": ["src/*"]
+    }
+  }
+}

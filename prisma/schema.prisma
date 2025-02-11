@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  Int                @id @default(autoincrement())
+  username            String             @unique
+  email               String             @unique
+  password            String
+  createdAt           DateTime           @default(now())
+  tokenVersion        Int                @default(0)
+  invitationsReceived Invitation[]       @relation("InvitationsReceived")
+  invitationsSent     Invitation[]       @relation("InvitationsSent")
+  tasks               Task[]
+  collaborations      UserCollaborator[] @relation("Collaborations")
+  ownedCollaborators  UserCollaborator[] @relation("OwnedCollaborators")
+}
+
+model Task {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  uuid        Int
+  createdAt   DateTime   @default(now())
+  creator     User       @relation(fields: [uuid], references: [id])
+}
+
+model UserCollaborator {
+  id             Int     @id @default(autoincrement())
+  ownerId        Int
+  collaboratorId Int
+  accepted       Boolean @default(false)
+  collaborator   User    @relation("Collaborations", fields: [collaboratorId], references: [id])
+  owner          User    @relation("OwnedCollaborators", fields: [ownerId], references: [id])
+
+  @@unique([ownerId, collaboratorId])
+}
+
+model Invitation {
+  id             Int              @id @default(autoincrement())
+  ownerId        Int
+  collaboratorId Int
+  status         InvitationStatus @default(PENDING)
+  createdAt      DateTime         @default(now())
+  collaborator   User             @relation("InvitationsReceived", fields: [collaboratorId], references: [id])
+  owner          User             @relation("InvitationsSent", fields: [ownerId], references: [id])
+
+  @@unique([ownerId, collaboratorId])
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
