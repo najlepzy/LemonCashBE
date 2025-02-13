@@ -55,7 +55,7 @@ Este repositorio contiene el backend de un **Task Manager** construido con **Nes
 ```bash
 # Clonar el repositorio
 git clone https://github.com/najlepzy/LemonCashBE.git
-cd LEMONFE
+cd LEMONBE
 ```
 
 ### Instalar PostgreSQL
